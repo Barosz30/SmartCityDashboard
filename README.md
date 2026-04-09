@@ -36,6 +36,29 @@ npm run typecheck
 npm run build
 ```
 
+## CI/CD
+
+- CI workflow (`.github/workflows/ci.yml`) runs on push/PR to `main` or `master`:
+  - lint
+  - typecheck
+  - unit tests (Vitest)
+  - build
+- E2E workflow (`.github/workflows/playwright.yml`) runs Playwright tests with report artifact.
+- CD workflow (`.github/workflows/cd.yml`) deploys over SSH:
+  - `staging` environment deploy after successful CI on `main`/`master`
+  - `production` environment deploy after staging (recommended with manual approval in GitHub Environments)
+
+Required GitHub repository secrets for CD:
+
+- `STAGING_SSH_HOST`
+- `STAGING_SSH_USER`
+- `STAGING_SSH_KEY`
+- `STAGING_DEPLOY_PATH`
+- `PROD_SSH_HOST`
+- `PROD_SSH_USER`
+- `PROD_SSH_KEY`
+- `PROD_DEPLOY_PATH`
+
 ## Realtime + Alert Actions
 
 - SSE stream endpoint: `GET /api/events`
